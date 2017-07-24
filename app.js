@@ -11,7 +11,7 @@ app.get('/', function(req, res) {
 app.get('/button', (req, res) => {
   res.json({
     title: 'Finance now!',
-    url: 'http://localhost/finance-redirect',
+    url: 'http://localhost:3000/finance-redirect',
   });
 });
 
