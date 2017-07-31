@@ -11,13 +11,25 @@
     <script>
       'use strict';
 
+      function select(el) {
+        return document.querySelectorAll(el);
+      }
+
+      function createEl(el, attributes, options) {
+        const element = document.createElement(el);
+        Object.entries(attributes).map(([key, value]) => {
+          return element[key] = value;
+        });
+        return element;
+      }
+
       function getHost() {
         return 'http://localhost:3000';
       }
 
       function httpGetAsync(url, cb) {
         const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             return cb(xhr.responseText);
           }

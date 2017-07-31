@@ -2,9 +2,10 @@ const express = require('express');
 const cors = require('cors')
 const app = express();
 
+// Enable use of CORS.
 app.use(cors());
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
@@ -13,10 +14,6 @@ app.get('/button', (req, res) => {
     title: 'Finance now!',
     url: 'http://localhost:3000/finance-redirect',
   });
-});
-
-app.get('/cors', (req, res) => {
-  res.send('CORS requests now enabled for all origins!');
 });
 
 app.get('/finance-redirect', (req, res) => {
