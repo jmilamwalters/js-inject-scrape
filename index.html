@@ -4,66 +4,23 @@
     <meta charset="utf-8">
     <title>Sample HTML - JavaScript Inject, Scrape, and Render</title>
   </head>
-  <body>
+  <body id="app">
     <h1 id="the-price-heading">The Price</h1>
     <h3 id="the-price-numeral">$55,999.00</h1>
     <hr id="hr" />
-    <script>
+    <script type="text/javascript">
       'use strict';
-
-      function select(el) {
-        return document.querySelectorAll(el);
-      }
-
-      function createEl(el, attributes, options) {
-        const element = document.createElement(el);
-        Object.entries(attributes).map(([key, value]) => {
-          return element[key] = value;
-        });
-        return element;
-      }
 
       function getHost() {
         return 'http://localhost:3000';
       }
 
-      function httpGetAsync(url, cb) {
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            return cb(xhr.responseText);
-          }
-        };
-        xhr.open('GET', url, true); // true for asynchronous
-        xhr.send();
-      }
-
-      function scrapePrice() {
-        return document.getElementById('the-price-numeral').textContent;
-      }
-
-      function renderButton({ title, url, price }) {
-        const anchor = document.getElementById('hr');
-        const link = document.createElement('a');
-        link.href = url;
-        const button = document.createElement('button');
-        button.textContent = `${price} - ${title}`;
-        link.appendChild(button);
-        return document.body.appendChild(link);
-      }
-
-      function handleOnSuccess(res) {
-        const config = Object.assign(
-          {},
-          JSON.parse(res),
-          { price: scrapePrice() },
-        );
-        renderButton(config);
-      }
-
       // Execute setup.
       function setUpPage() {
-        httpGetAsync(`${getHost()}/button`, handleOnSuccess);
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = `${getHost()}/public/client.js?uid=${Date.now()}`;
+        return document.body.appendChild(script);
       }
 
       // Initialize module on page load. Accommodate IE8.
